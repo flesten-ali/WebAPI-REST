@@ -1,0 +1,34 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@schema = https
+@hostname = localhost
+@port = 7290
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept: application/xml
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept :application/json
+Content-Type:application/json
+
+{
+  "name":"Test Http Files",
+  "description":"Test Http Files"
+}
+
+
+###
+//get the token
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type:application/json
+
+{
+  "username":"Test Http Files",
+  "password":"Test Http Files"
+}
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization :Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IlRlc3QgSHR0cCBGaWxlcyIsImZhbWlseV9uYW1lIjoiQmF3YXFuYSIsImNpdHkiOiJBbnR3ZXJwIiwibmJmIjoxNzM0NDU5MTY1LCJleHAiOjE3MzQ0NjI3NjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyOTAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.yMxIpXoQouDjF9kFuXqfwK2sBiFuUAFCKTtmTUq9yLc
