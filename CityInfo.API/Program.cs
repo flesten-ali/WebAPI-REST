@@ -1,11 +1,14 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using CityInfo.API;
+using CityInfo.API.Filters;
 using CityInfo.API.Services;
+using CityInfo.API.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -32,9 +35,18 @@ builder.Host.UseSerilog();
 //-----------------------------------------------------------------------
 
 builder.Services.AddControllers(options =>
-options.ReturnHttpNotAcceptable = true
-).AddNewtonsoftJson()
+{
+    options.ReturnHttpNotAcceptable = true;
+    //----------------------------------Add The Filter Validator-------------------------------------
+
+    options.Filters.Add<ValidatorFilter>();
+})
+.AddNewtonsoftJson()
 .AddXmlDataContractSerializerFormatters();
+//----------------------------------Fluent Validation-------------------------------------
+
+builder.Services.AddFluentValidationAutoValidation();
+
 //-----------------------------------------------------------------------
 
 
@@ -83,6 +95,12 @@ builder.Services.AddApiVersioning(setupAction =>
     {
         setupAction.SubstituteApiVersionInUrl = true;
     });
+//--------------------------------Fluent Validation---------------------------------------
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+//builder.Services.AddMvc()
+//.AddFluentValidation(mvc => 
+//mvc.RegisterValidatorsFromAssemblyContaining<Startup>());
+
 //-----------------------------------------------------------------------
 
 var apiVersionDescriptionProvider = builder.Services.BuildServiceProvider()
@@ -173,7 +191,7 @@ builder.Services.AddAuthorization(
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor |
 ForwardedHeaders.XForwardedProto
-);  
+);
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -182,7 +200,7 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-   // app.UseDeveloperExceptionPage();
+    // app.UseDeveloperExceptionPage();
     app.UseExceptionHandler();
 }
 //-----------------------------------------------------------------------

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace CityInfo.API.Controllers
 {
@@ -41,7 +39,7 @@ namespace CityInfo.API.Controllers
                 new Claim("family_name", user.LastName),
                 new Claim("city", user.City)
             };
-            
+
             //all token
             var jwt = new JwtSecurityToken(
                 _configuration["Authentication:ISSuer"],

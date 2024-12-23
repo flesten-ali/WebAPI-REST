@@ -11,7 +11,7 @@ namespace CityInfo.API.Controllers;
 
 [Route("api/v{version:apiVersion}/cities/{cityId}/pointsofinterest")]
 [ApiController]
-[Authorize(Policy = "MustBeFromCity")]
+//[Authorize(Policy = "MustBeFromCity")]
 [ApiVersion(2)]
 
 public class PointOfInterestController : ControllerBase
@@ -75,8 +75,13 @@ public class PointOfInterestController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<PointOfIntrestDto>> CreatePointOfInterest
         (int cityId,
-        PointOfInterestDtoForCreating dto)
+       [FromBody] PointOfInterestDtoForCreating dto)
     {
+        //if (!ModelState.IsValid)
+        //{
+        //    return BadRequest(ModelState);
+        //}
+
         if (!await _repositiory.CityExistsAsync(cityId))
         {
             return NotFound();
