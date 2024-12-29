@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 namespace CityInfo.API.Controllers;
 
-
+[MyActionFilter]
+[HttpsOnly]
 [ApiController]
 [Route("api/v{version:apiVersion}/cities")]
  [Authorize]

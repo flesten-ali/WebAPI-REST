@@ -25,7 +25,7 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 
 //-----------------------------------------------------------------------
-
+ 
 builder.Host.UseSerilog();
 // Add console logging provider
 //builder.Logging.ClearProviders(); // logging providers already configured internally when calling CreateBuilder
@@ -243,10 +243,10 @@ app.UseEndpoints(endpoints =>
 });
 
 //app.MapControllers();
-//app.Run(
+app.Run(
 
-//    async (c) => await c.Response.WriteAsync("HELLO")
+    async (httpContext) => await httpContext.Response.WriteAsync("HELLO")
 
-//    );
+    );
 
 app.Run();

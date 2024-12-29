@@ -34,10 +34,10 @@ namespace CityInfo.API.Controllers
             //payloads
             var claims = new List<Claim>
             {
-                new Claim("sub", user.UserId.ToString()),
-                new Claim("given_name", user.FirstName),
-                new Claim("family_name", user.LastName),
-                new Claim("city", user.City)
+                new ("sub", user.UserId.ToString()),
+                new ("given_name", user.FirstName),
+                new ("family_name", user.LastName),
+                new ("city", user.City)
             };
 
             //all token

@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CityInfo.API.Filters;
 
-public class ValidatorFilter : IAsyncActionFilter
+public class ValidatorFilter :IAsyncActionFilter
 {
+
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        //before hits the controller
+        //before hits the  action
         if (!context.ModelState.IsValid)
         {
             var errorsInModelState = context.ModelState.Where(x => x.Value.Errors.Count > 0)
@@ -33,6 +34,6 @@ public class ValidatorFilter : IAsyncActionFilter
 
         await next();
 
-        //after hits the controller
+        //after hits the action
     }
 }
